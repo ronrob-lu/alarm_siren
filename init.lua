@@ -1,8 +1,6 @@
 -- Alarm Siren Mod for Luanti/Minetest
 -- Adds an alarm siren block that can be manually activated by double-clicking
 
-local modname = minetest.get_current_modname() or "alarm_siren"
-
 -- Store last punch time for double-click detection
 local last_punch = {}
 
@@ -34,7 +32,7 @@ minetest.register_node("alarm_siren:siren", {
             if active == 0 then
                 meta:set_int("active", 1)
                 meta:set_string("infotext", "Alarm Siren (Active)")
-                minetest.sound_play("alarm_siren_sirene", {pos = pos, gain = 0.5, max_hear_distance = 64})
+                minetest.sound_play("sirene", {pos = pos, gain = 0.5, max_hear_distance = 64})
                 local timer = minetest.get_node_timer(pos)
                 timer:start(3)
             else
@@ -61,7 +59,7 @@ minetest.register_node("alarm_siren:siren", {
         local active = meta:get_int("active")
         
         if active == 1 then
-            minetest.sound_play("alarm_siren_sirene", {pos = pos, gain = 0.5, max_hear_distance = 64})
+            minetest.sound_play("sirene", {pos = pos, gain = 0.5, max_hear_distance = 64})
             return true
         end
         return false
@@ -78,12 +76,6 @@ minetest.register_craftitem("alarm_siren:siren", {
         -- Use the node's on_place behavior
         return minetest.default_place_node_simple(itemstack, placer, pointed_thing)
     end,
-})
-
--- Register the sound file
-minetest.register_sound("alarm_siren_sirene", {
-    name = "alarm_siren_sirene",
-    filename = minetest.get_mod_path(modname) .. "/sounds/sirene.ogg",
 })
 
 -- Provide a simple crafting recipe (optional, can be removed if not desired)
