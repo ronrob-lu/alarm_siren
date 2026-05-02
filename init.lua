@@ -1,12 +1,12 @@
--- Alarm Siren Mod for Luanti/Minetest
--- Adds an alarm siren block that can be manually activated by double-clicking
+-- Siren Block Mod for Luanti/Minetest
+-- Adds a siren block that can be manually activated by double-clicking
 
 -- Store last punch time for double-click detection
 local last_punch = {}
 
 -- Register the siren node
 minetest.register_node("alarm_siren:siren", {
-    description = "Alarm Siren\nDouble-click to toggle on/off",
+    description = "Siren Block\nDouble-click to toggle on/off",
     tiles = {"siren.png"},
     paramtype2 = "facedir",
     is_ground_content = false,
@@ -15,7 +15,7 @@ minetest.register_node("alarm_siren:siren", {
     -- Tooltip showing active/inactive status
     after_place_node = function(pos, placer, itemstack, pointed_thing)
         local meta = minetest.get_meta(pos)
-        meta:set_string("infotext", "Alarm Siren (Inactive)")
+        meta:set_string("infotext", "Siren Block (Inactive)")
         meta:set_int("active", 0)
     end,
     
@@ -31,13 +31,13 @@ minetest.register_node("alarm_siren:siren", {
             
             if active == 0 then
                 meta:set_int("active", 1)
-                meta:set_string("infotext", "Alarm Siren (Active)")
+                meta:set_string("infotext", "Siren Block (Active)")
                 minetest.sound_play("sirene", {pos = pos, gain = 0.5, max_hear_distance = 64})
                 local timer = minetest.get_node_timer(pos)
                 timer:start(3)
             else
                 meta:set_int("active", 0)
-                meta:set_string("infotext", "Alarm Siren (Inactive)")
+                meta:set_string("infotext", "Siren Block (Inactive)")
                 local timer = minetest.get_node_timer(pos)
                 timer:stop()
             end
@@ -70,11 +70,11 @@ minetest.register_node("alarm_siren:siren", {
 
 -- Register the creative inventory item
 minetest.register_craftitem("alarm_siren:siren", {
-    description = "Alarm Siren\nDouble-click placed block to toggle on/off",
+    description = "Siren Block\nDouble-click placed block to toggle on/off",
     inventory_image = "siren.png",
     on_place = function(itemstack, placer, pointed_thing)
         -- Use the node's on_place behavior
-        return minetest.default_place_node_simple(itemstack, placer, pointed_thing)
+        return minetest.place_node(itemstack, placer, pointed_thing)
     end,
 })
 
