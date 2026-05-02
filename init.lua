@@ -43,6 +43,7 @@ minetest.register_node("alarm_siren:siren", {
             end
             
             last_punch[key] = nil
+            return true
         else
             last_punch[key] = now
             minetest.after(0.5, function()
@@ -50,6 +51,7 @@ minetest.register_node("alarm_siren:siren", {
                     last_punch[key] = nil
                 end
             end)
+            return false
         end
     end,
     
