@@ -1,10 +1,10 @@
 -- Alarm Siren Mod for Luanti/Minetest
 -- Adds an alarm siren block that can be manually activated by double-clicking
 
-local modname = "alarm_siren"
+local modname = minetest.get_current_modname() or "alarm_siren"
 
 -- Store last punch time for double-click detection
-local last_punch_time = {}
+local last_punch = {}
 
 -- Register the siren node
 minetest.register_node("alarm_siren:siren", {
@@ -13,61 +13,43 @@ minetest.register_node("alarm_siren:siren", {
     paramtype2 = "facedir",
     is_ground_content = false,
     groups = {cracky = 3, oddly_breakable_by_hand = 2},
-    sounds = minetest.defaults.node_sound_stone_defaults(),
     
     -- Tooltip showing active/inactive status
     after_place_node = function(pos, placer, itemstack, pointed_thing)
-        -- Set initial metadata (inactive)
         local meta = minetest.get_meta(pos)
         meta:set_string("infotext", "Alarm Siren (Inactive)")
         meta:set_int("active", 0)
     end,
     
     -- Handle double-click activation (on_punch)
-    on_punch = function(pos, node, puncher, pointeds)
-        local player_name = puncher:get_player_name()
-        local current_time = minetest.get_us_time()
+    on_punch = function(pos, node, puncher, pointed_thing)
+        local pname = puncher:get_player_name()
+        local now = minetest.get_us_time()
+        local key = pname .. ":" .. minetest.pos_to_string(pos)
         
-        -- Check if this is a double-click (within 300ms)
-        if last_punch_time[player_name] and 
-           (current_time - last_punch_time[player_name]) < 300000 then
-            
-            -- This is a double-click, toggle the siren
+        if last_punch[key] and (now - last_punch[key]) < 300000 then
             local meta = minetest.get_meta(pos)
             local active = meta:get_int("active")
             
             if active == 0 then
-                -- Activate the siren
                 meta:set_int("active", 1)
                 meta:set_string("infotext", "Alarm Siren (Active)")
-                
-                -- Play the siren sound
                 minetest.sound_play("alarm_siren_sirene", {pos = pos, gain = 0.5, max_hear_distance = 64})
-                
-                -- Schedule recurring sound while active (every 3 seconds)
                 local timer = minetest.get_node_timer(pos)
                 timer:start(3)
             else
-                -- Deactivate the siren
                 meta:set_int("active", 0)
                 meta:set_string("infotext", "Alarm Siren (Inactive)")
-                
-                -- Stop the timer
                 local timer = minetest.get_node_timer(pos)
                 timer:stop()
             end
             
-            -- Reset last punch time to prevent triple-click issues
-            last_punch_time[player_name] = 0
-            
+            last_punch[key] = nil
         else
-            -- Single click, just record the time
-            last_punch_time[player_name] = current_time
-            
-            -- Clean up old entries after 1 second
-            minetest.after(1, function()
-                if last_punch_time[player_name] == current_time then
-                    last_punch_time[player_name] = nil
+            last_punch[key] = now
+            minetest.after(0.5, function()
+                if last_punch[key] == now then
+                    last_punch[key] = nil
                 end
             end)
         end
@@ -79,15 +61,12 @@ minetest.register_node("alarm_siren:siren", {
         local active = meta:get_int("active")
         
         if active == 1 then
-            -- Play the siren sound again
             minetest.sound_play("alarm_siren_sirene", {pos = pos, gain = 0.5, max_hear_distance = 64})
-            return true -- Continue timer
-        else
-            return false -- Stop timer
+            return true
         end
+        return false
     end,
     
-    -- Drop the siren item when dug
     drop = "alarm_siren:siren",
 })
 
