@@ -68,12 +68,6 @@ minetest.register_node("alarm_siren:siren", {
     drop = "alarm_siren:siren",
 })
 
--- Register the creative inventory item
-minetest.register_craftitem("alarm_siren:siren", {
-    description = "Siren Block\nDouble-click placed block to toggle on/off",
-    inventory_image = "siren.png",
-})
-
 -- Provide a simple crafting recipe (optional, can be removed if not desired)
 minetest.register_craft({
     output = "alarm_siren:siren",
