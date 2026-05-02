@@ -1,1 +1,1 @@
-Nothing needs to be added to .gitignore since only a source file (`init.lua`) was modified and there are no build artifacts, dependencies, or temporary files in the changes.
+Nothing needs to be added to the .gitignore file based on the provided changes. The modification of 'init.lua' does not introduce any files that should be ignored according to the specified rules.
