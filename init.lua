@@ -72,10 +72,6 @@ minetest.register_node("alarm_siren:siren", {
 minetest.register_craftitem("alarm_siren:siren", {
     description = "Siren Block\nDouble-click placed block to toggle on/off",
     inventory_image = "siren.png",
-    on_place = function(itemstack, placer, pointed_thing)
-        -- Use the node's on_place behavior
-        return minetest.place_node(itemstack, placer, pointed_thing)
-    end,
 })
 
 -- Provide a simple crafting recipe (optional, can be removed if not desired)
