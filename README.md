@@ -1,50 +1,57 @@
-# Alarm Siren Mod for Luanti/Minetest
+# 🚨 Alarm Siren: Protect & Secure Your Builds!
 
-A simple mod that adds an alarm siren block that can be manually activated by double-clicking.
+Looking to secure your secret base, build an industrial complex, or just warn your friends when danger is near? The **Alarm Siren** mod for Luanti (Minetest) is your ultimate emergency alert system! 
 
-## Features
+With simple placing, instant activation, and a realistic wailing siren, this block is the perfect addition to any world, server, or roleplay setup.
 
-- Placeable alarm siren node
-- Double-click to toggle on/off
-- Tooltip shows current status (active/inactive)
-- Plays siren sound when active
-- Uses provided texture and sound files
+---
 
-## Requirements
+## ⚡ Key Features
 
-- Luanti/Minetest 5.0+
+* **🔊 Loud & Realistic Alert:** Plays a high-quality, attention-grabbing siren sound that can be heard up to **64 blocks away**.
+* **🖱️ Dual-Toggle Activation:** Turn it on or off easily! Right-click the block or double-punch (double-click) it to activate the alarm.
+* **👀 Visual Status:** Look at the siren block anytime to see its current state (Active or Inactive) right in your tooltip.
+* **🛠️ Survival & Creative Ready:** Easily craftable in standard Minetest Game (MTG) or MineClone2/VoxeLibre survival worlds, or pull it straight from creative mode!
+* **📦 Light & Fast:** Designed to run smoothly on any server or local world without causing lag.
 
-## Installation
+---
 
-1. Extract or clone this folder into your `mods` directory
-2. The folder should be named `alarm_siren`
-3. Enable the mod in your world's `mod.conf` or through the game menu
+## 🛠️ How to Use & Craft
 
-## Usage
+### 1. Crafting Your Siren
 
-1. Craft or obtain the alarm siren node (creative inventory or `/give alarm_siren:siren`)
-2. Place the siren block in the world
-3. **Double-click** (punch twice quickly) on the placed block to toggle it on/off
-4. When active, the siren will play a sound and show "Active" in the tooltip
-5. When inactive, the tooltip will show "Inactive"
+**Minetest Game (MTG) Recipe:**
+* Place Steel Ingots around a central Copper Ingot:
+  ```text
+  [Steel Ingot]  [Steel Ingot]  [Steel Ingot]
+  [Steel Ingot]  [Copper Ingot] [Steel Ingot]
+  [Steel Ingot]  [Steel Ingot]  [Steel Ingot]
+  ```
 
-## Files Included
+**MineClone2 / VoxeLibre Recipe:**
+* Place Iron Ingots around a central Redstone Dust:
+  ```text
+  [Iron Ingot]  [Iron Ingot]  [Iron Ingot]
+  [Iron Ingot]  [Redstone]    [Iron Ingot]
+  [Iron Ingot]  [Iron Ingot]  [Iron Ingot]
+  ```
 
-- `init.lua` - Main mod code
-- `mod.conf` - Mod configuration
-- `README.md` - This file
-- `sounds/sirene.ogg` - Siren sound effect (provided)
-- `textures/siren.png` - Siren texture (provided)
+*Or use `/give alarm_siren:siren` to grab one instantly!*
 
-## License
+### 2. Setting Up Your Alarm
+1. **Place** the Alarm Siren block wherever you need a warning system.
+2. **Right-click** or **double-punch** the block to activate it. The siren will start wailing!
+3. To silence the alarm, simply **right-click** or **double-punch** it again.
 
-Please check the license of the provided sound and texture files.
-The code itself is licensed under MIT License.
+---
 
-## Changelog
+## 🎮 Great For:
+- **Base Defense:** Alert yourself when invaders approach your territory.
+- **Industrial Roleplay:** Build realistic power plants, factories, and military bunkers.
+- **Server Events:** Signal the start of games, PVP matches, or nighttime alerts.
 
-### v1.0.0
-- Initial release
-- Basic siren functionality
-- Double-click activation
-- Tooltip status display
+---
+
+## 🧩 Compatibility & Requirements
+* Works on **Luanti (Minetest) 5.0+**
+* Seamlessly supports **Minetest Game (MTG)**, **MineClone2**, and **VoxeLibre** right out of the box!
