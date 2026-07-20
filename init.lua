@@ -4,13 +4,25 @@
 -- Store last punch time for double-click detection
 local last_punch = {}
 
+-- Dynamic groups compatibility
+local groups = {cracky = 3, oddly_breakable_by_hand = 2}
+if minetest.get_modpath("mcl_core") then
+    groups = {pickaxey = 1, cracky = 3}
+end
+
 -- Register the siren node
 minetest.register_node("alarm_siren:siren", {
-    description = "Siren Block\nDouble-click to toggle on/off",
+    description = "Siren Block\nRight-click to toggle on/off",
     tiles = {"siren.png"},
     paramtype2 = "facedir",
     is_ground_content = false,
-    groups = {cracky = 3, oddly_breakable_by_hand = 2},
+    groups = groups,
+    
+    on_construct = function(pos)
+        local meta = minetest.get_meta(pos)
+        meta:set_string("infotext", "Siren Block (Inactive)")
+        meta:set_int("active", 0)
+    end,
     
     -- Tooltip showing active/inactive status
     after_place_node = function(pos, placer, itemstack, pointed_thing)
@@ -19,7 +31,27 @@ minetest.register_node("alarm_siren:siren", {
         meta:set_int("active", 0)
     end,
     
-    -- Handle double-click activation (on_punch)
+    -- Handle right-click toggle (standard for both Minetest and MineClone/Voxelibre)
+    on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+        local meta = minetest.get_meta(pos)
+        local active = meta:get_int("active")
+        
+        if active == 0 then
+            meta:set_int("active", 1)
+            meta:set_string("infotext", "Siren Block (Active)")
+            minetest.sound_play("sirene", {pos = pos, gain = 0.5, max_hear_distance = 64})
+            local timer = minetest.get_node_timer(pos)
+            timer:start(3)
+        else
+            meta:set_int("active", 0)
+            meta:set_string("infotext", "Siren Block (Inactive)")
+            local timer = minetest.get_node_timer(pos)
+            timer:stop()
+        end
+        return itemstack
+    end,
+    
+    -- Keep double-click punch as a fallback
     on_punch = function(pos, node, puncher, pointed_thing)
         local pname = puncher:get_player_name()
         local now = minetest.get_us_time()
@@ -70,14 +102,25 @@ minetest.register_node("alarm_siren:siren", {
     drop = "alarm_siren:siren",
 })
 
--- Provide a simple crafting recipe (optional, can be removed if not desired)
-minetest.register_craft({
-    output = "alarm_siren:siren",
-    recipe = {
-        {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-        {"default:steel_ingot", "default:copper_ingot", "default:steel_ingot"},
-        {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-    },
-})
+-- Crafting Recipes
+if minetest.get_modpath("default") then
+    minetest.register_craft({
+        output = "alarm_siren:siren",
+        recipe = {
+            {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+            {"default:steel_ingot", "default:copper_ingot", "default:steel_ingot"},
+            {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+        },
+    })
+elseif minetest.get_modpath("mcl_core") then
+    minetest.register_craft({
+        output = "alarm_siren:siren",
+        recipe = {
+            {"mcl_core:iron_ingot", "mcl_core:iron_ingot", "mcl_core:iron_ingot"},
+            {"mcl_core:iron_ingot", "mcl_core:redstone",   "mcl_core:iron_ingot"},
+            {"mcl_core:iron_ingot", "mcl_core:iron_ingot", "mcl_core:iron_ingot"},
+        },
+    })
+end
 
 minetest.log("action", "[MOD] Alarm Siren loaded successfully")
