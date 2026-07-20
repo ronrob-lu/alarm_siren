@@ -4,6 +4,13 @@
 -- Store last punch time for double-click detection
 local last_punch = {}
 
+-- Register the siren sound
+minetest.register_sound("sirene", {
+    name = "sirene",
+    filename = "sirene.ogg",
+    gain = 0.5,
+})
+
 -- Register the siren node
 minetest.register_node("alarm_siren:siren", {
     description = "Siren Block\nDouble-click to toggle on/off",
