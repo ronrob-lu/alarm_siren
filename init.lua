@@ -78,10 +78,10 @@ local steel_ingot = "mcl_steel:ingot"
 local copper_ingot = "mcl_copper:ingot"
 
 -- Check if mcl_ items exist, otherwise use default
-if not minetest.get_craft_result({method = "normal", width = 1, items = {steel_ingot}}) then
+if not minetest.registered_items[steel_ingot] then
     steel_ingot = "default:steel_ingot"
 end
-if not minetest.get_craft_result({method = "normal", width = 1, items = {copper_ingot}}) then
+if not minetest.registered_items[copper_ingot] then
     copper_ingot = "default:copper_ingot"
 end
 
