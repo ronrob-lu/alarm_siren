@@ -70,13 +70,25 @@ minetest.register_node("alarm_siren:siren", {
     drop = "alarm_siren:siren",
 })
 
--- Provide a simple crafting recipe (optional, can be removed if not desired)
+-- Provide a simple crafting recipe with support for multiple mods
+-- Try Mineclonia/Voxelibre (mcl_) first, then fallback to default
+local steel_ingot = "mcl_steel:ingot"
+local copper_ingot = "mcl_copper:ingot"
+
+-- Check if mcl_ items exist, otherwise use default
+if not minetest.get_craft_result({method = "normal", width = 1, items = {steel_ingot}}) then
+    steel_ingot = "default:steel_ingot"
+end
+if not minetest.get_craft_result({method = "normal", width = 1, items = {copper_ingot}}) then
+    copper_ingot = "default:copper_ingot"
+end
+
 minetest.register_craft({
     output = "alarm_siren:siren",
     recipe = {
-        {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-        {"default:steel_ingot", "default:copper_ingot", "default:steel_ingot"},
-        {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+        {steel_ingot, steel_ingot, steel_ingot},
+        {steel_ingot, copper_ingot, steel_ingot},
+        {steel_ingot, steel_ingot, steel_ingot},
     },
 })
 
