@@ -73,25 +73,27 @@ minetest.register_node("alarm_siren:siren", {
 })
 
 -- Provide a simple crafting recipe with support for multiple mods
--- Try Mineclonia/Voxelibre (mcl_) first, then fallback to default
-local steel_ingot = "mcl_steel:ingot"
-local copper_ingot = "mcl_copper:ingot"
-
--- Check if mcl_ items exist, otherwise use default
-if not minetest.registered_items[steel_ingot] then
-    steel_ingot = "default:steel_ingot"
-end
-if not minetest.registered_items[copper_ingot] then
-    copper_ingot = "default:copper_ingot"
-end
-
-minetest.register_craft({
-    output = "alarm_siren:siren",
-    recipe = {
-        {steel_ingot, steel_ingot, steel_ingot},
-        {steel_ingot, copper_ingot, steel_ingot},
-        {steel_ingot, steel_ingot, steel_ingot},
-    },
-})
-
-minetest.log("action", "[MOD] Alarm Siren loaded successfully")
+-- Use minetest.after to delay recipe registration until all mods are loaded
+minetest.after(0, function()
+    local steel_ingot = "mcl_steel:ingot"
+    local copper_ingot = "mcl_copper:ingot"
+    
+    -- Check if mcl_ items exist, otherwise use default
+    if not minetest.registered_items[steel_ingot] then
+        steel_ingot = "default:steel_ingot"
+    end
+    if not minetest.registered_items[copper_ingot] then
+        copper_ingot = "default:copper_ingot"
+    end
+    
+    minetest.register_craft({
+        output = "alarm_siren:siren",
+        recipe = {
+            {steel_ingot, steel_ingot, steel_ingot},
+            {steel_ingot, copper_ingot, steel_ingot},
+            {steel_ingot, steel_ingot, steel_ingot},
+        },
+    })
+    
+    minetest.log("action", "[MOD] Alarm Siren loaded successfully with materials: " .. steel_ingot .. ", " .. copper_ingot)
+end)
