@@ -25,6 +25,7 @@ minetest.register_node("alarm_siren:siren", {
         local now = minetest.get_us_time()
         local key = pname .. ":" .. minetest.pos_to_string(pos)
         
+        -- Always return true to prevent the node from being dug when punched
         if last_punch[key] and (now - last_punch[key]) < 300000 then
             local meta = minetest.get_meta(pos)
             local active = meta:get_int("active")
@@ -51,7 +52,8 @@ minetest.register_node("alarm_siren:siren", {
                     last_punch[key] = nil
                 end
             end)
-            return false
+            -- Return true to prevent digging in creative mode
+            return true
         end
     end,
     
@@ -70,13 +72,25 @@ minetest.register_node("alarm_siren:siren", {
     drop = "alarm_siren:siren",
 })
 
--- Provide a simple crafting recipe (optional, can be removed if not desired)
+-- Provide a simple crafting recipe with support for multiple mods
+-- Try Mineclonia/Voxelibre (mcl_) first, then fallback to default
+local steel_ingot = "mcl_steel:ingot"
+local copper_ingot = "mcl_copper:ingot"
+
+-- Check if mcl_ items exist, otherwise use default
+if not minetest.get_craft_result({method = "normal", width = 1, items = {steel_ingot}}) then
+    steel_ingot = "default:steel_ingot"
+end
+if not minetest.get_craft_result({method = "normal", width = 1, items = {copper_ingot}}) then
+    copper_ingot = "default:copper_ingot"
+end
+
 minetest.register_craft({
     output = "alarm_siren:siren",
     recipe = {
-        {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-        {"default:steel_ingot", "default:copper_ingot", "default:steel_ingot"},
-        {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+        {steel_ingot, steel_ingot, steel_ingot},
+        {steel_ingot, copper_ingot, steel_ingot},
+        {steel_ingot, steel_ingot, steel_ingot},
     },
 })
 
