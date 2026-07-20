@@ -25,6 +25,7 @@ minetest.register_node("alarm_siren:siren", {
         local now = minetest.get_us_time()
         local key = pname .. ":" .. minetest.pos_to_string(pos)
         
+        -- Always return true to prevent the node from being dug when punched
         if last_punch[key] and (now - last_punch[key]) < 300000 then
             local meta = minetest.get_meta(pos)
             local active = meta:get_int("active")
@@ -51,7 +52,8 @@ minetest.register_node("alarm_siren:siren", {
                     last_punch[key] = nil
                 end
             end)
-            return false
+            -- Return true to prevent digging in creative mode
+            return true
         end
     end,
     
