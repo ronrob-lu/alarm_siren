@@ -117,7 +117,7 @@ elseif minetest.get_modpath("mcl_core") then
         output = "alarm_siren:siren",
         recipe = {
             {"mcl_core:iron_ingot", "mcl_core:iron_ingot", "mcl_core:iron_ingot"},
-            {"mcl_core:iron_ingot", "mcl_core:redstone",   "mcl_core:iron_ingot"},
+            {"mcl_core:iron_ingot", "mcl_jukebox:jukebox", "mcl_core:iron_ingot"},
             {"mcl_core:iron_ingot", "mcl_core:iron_ingot", "mcl_core:iron_ingot"},
         },
     })

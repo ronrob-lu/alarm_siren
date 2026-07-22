@@ -23,18 +23,24 @@ With simple placing, instant activation, and a realistic wailing siren, this blo
 **Minetest Game (MTG) Recipe:**
 * Place Steel Ingots around a central Copper Ingot:
   ```text
-  [Steel Ingot]  [Steel Ingot]  [Steel Ingot]
-  [Steel Ingot]  [Copper Ingot] [Steel Ingot]
-  [Steel Ingot]  [Steel Ingot]  [Steel Ingot]
+  [Steel Ingot]  [Steel Ingot]   [Steel Ingot]
+  [Steel Ingot]  [Copper Ingot]  [Steel Ingot]
+  [Steel Ingot]  [Steel Ingot]   [Steel Ingot]
   ```
+  *(Uses `default:steel_ingot` and `default:copper_ingot`)*
+
+  ![Crafting Alarm Siren in Minetest Game](screenshots/craft-with-steel-and-copper-in-minetest.png)
 
 **MineClone2 / VoxeLibre Recipe:**
-* Place Iron Ingots around a central Redstone Dust:
+* Place Iron Ingots around a central Jukebox (yes, you literally build a Jukebox inside to blast the siren! 🎵):
   ```text
   [Iron Ingot]  [Iron Ingot]  [Iron Ingot]
-  [Iron Ingot]  [Redstone]    [Iron Ingot]
+  [Iron Ingot]  [Jukebox]     [Iron Ingot]
   [Iron Ingot]  [Iron Ingot]  [Iron Ingot]
   ```
+  *(Uses `mcl_core:iron_ingot` and `mcl_jukebox:jukebox`)*
+
+  ![Crafting Alarm Siren in VoxeLibre](screenshots/craft-with-jukebox-voxelibre.png)
 
 *Or use `/give alarm_siren:siren` to grab one instantly!*
 
